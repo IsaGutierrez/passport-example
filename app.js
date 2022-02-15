@@ -4,11 +4,16 @@ const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');
 const path = require('path')
+const passport = require('passport')
+const flash = require('connect-flash')
 
 require('./config/db.config');
 require('./config/hbs.config');
+require('./config/passport.config')
 
 const app = express();
+
+const sessionConfig = require('./config/session.config')
 
 /**
  * Middlewares
@@ -16,21 +21,37 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
+app.use(flash());
+
+app.use(sessionConfig)
 
 /**
  * View setup
  */
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'hbs')
+
+/** 
+ * Passport
+*/
+app.use(passport.initialize())
+app.use(passport.session())
 
 /**
  * Configure routes
  */
-const router = require('./config/routes.config');
+
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user
+  res.locals.flashMessage = req.flash('flashMessage')
+  next()
+})
+
+const router = require('./config/routes.config')
 app.use('/', router);
 
 app.use((req, res, next) => {
-  next(createError(404, 'Page not found'));
+  next(createError(404, 'Page not found'))
 });
 
 app.use((error, req, res, next) => {

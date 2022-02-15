@@ -1,7 +1,7 @@
 <div class="row justify-content-center mt-4">
   <div class="col-sm-4">
     <h1>Register</h1>
-    <form method="POST" action="/register">
+    <form method="POST" action="/register" enctype="multipart/form-data">
       <div class="form-group mb-3">
         <label for="name">Name</label>
         <input
@@ -11,6 +11,7 @@
           type="text"
           class="form-control {{#if errors.name}}is-invalid{{/if}}"
           placeholder="Name"
+          required
         >
         {{#if errors.name}}
           <div class="invalid-feedback">{{errors.name}}</div>
@@ -25,6 +26,7 @@
           type="email"
           class="form-control {{#if errors.email}}is-invalid{{/if}}"
           placeholder="example@expample.com"
+          required
         >
         {{#if errors.email}}
           <div class="invalid-feedback">{{errors.email}}</div>
@@ -39,10 +41,16 @@
           type="password"
           class="form-control {{#if errors.password}}is-invalid{{/if}}"
           placeholder="Password"
+          required
         >
         {{#if errors.password}}
           <div class="invalid-feedback">{{errors.password}}</div>
         {{/if}}
+      </div>
+      
+      <div class="mb-3">
+        <label for="image" class="form-label">User image</label>
+        <input class="form-control" name="image" type="file" id="image">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

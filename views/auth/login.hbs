@@ -9,7 +9,7 @@
           value="{{user.email}}"
           name="email"
           type="email"
-          class="form-control {{#if errors.email}}is-invalid{{/if}}"
+          class="form-control {{#if errorMessage}}is-invalid{{/if}}"
           placeholder="Enter name"
         >
       </div>
@@ -19,16 +19,18 @@
           id="password"
           name="password"
           type="password"
-          class="form-control {{#if errors.email}}is-invalid{{/if}}"
+          class="form-control {{#if errorMessage}}is-invalid{{/if}}"
           placeholder="Password"
         >
       </div>
-      {{#if errors.email}}
+      {{#if errorMessage}}
         <div class="text-danger text-small mb-2">
-          {{errors.email}}
+          {{errorMessage}}
         </div>
       {{/if}}
       <button type="submit" class="btn btn-primary">Submit</button>
+
+      <a href="/login/google"  class="btn btn-outline-primary">Log in with Google</a>
     </form>
   </div>
 </div>
