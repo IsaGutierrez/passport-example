@@ -8,7 +8,7 @@ cloudinary.config({
     api_secret: process.env.CLOUD_SECRET
 })
 
-const storage = CloudinaryStorage({
+const storage = new CloudinaryStorage({
     cloudinary,
     params: {
         folder: 'ironhack/multer-example',
